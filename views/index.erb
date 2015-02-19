@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<title>Background Job Example</title>
+<style>
+body, html {
+  font-family: sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+table.choices {
+  margin: 20px auto;
+  width: 80%
+}
+
+table.choices td{
+  padding: 20px;
+  margin: 20px;
+  border: 2px solid #eee;
+}
+
+.flash {
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #aaaaff;
+  background-color: #ddddff;
+}
+
+.buttons {
+  padding: 5px 0px 0px 0px;
+  width: 80%;
+  text-align: center;
+  margin: 5px auto 0px auto;
+}
+
+.buttons input {
+  background-color: #eee;
+}
+
+form label {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+form input {
+  margin: 5px;
+  font-size: 1.4em;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  display: block;
+  opacity: 0.85;
+  background-color: #ddd;
+  z-index: 99;
+  text-align: center;
+  padding-top: 150px;
+  font-weight: bold;
+  font-size: 3em;
+}
+
+.loading:before{
+  content: 'Waiting and Loading!!!'
+}
+
+</style>
+</head>
+<body>
+
+  <% if @flash_message %>
+  <div id="flasher" class="flash"><%=   @flash_message  %></div>
+
+  <script>
+      setTimeout(function(){ 
+        var flasher = document.getElementById('flasher');
+        if(flasher){
+         flasher.parentNode.removeChild(flasher);
+        }
+      }, 4000);
+  </script>
+  <% end %>
+
+<div id="loader" class="">
+</div>
+
+  <table class="choices">
+ <thead>
+  <tr>
+     <th>Send Spam Synchronously</th>
+     <th>Send Spam <em>A</em>synchronously</th>
+  </tr>
+  </thead>
+  <tr>
+  <td>
+  <form action="/send_mailer_synchronously" method="post">
+  <label for="msg_message">Message</label>
+  <input type="text" name="message" value="Hello World Sync"/>
+  <div class="buttons">
+  <input type="submit" value="Send Sync!" onclick="document.getElementById('loader').className='loading';">
+  </div>
+  </form>
+  </td>
+  <td>
+  <form action="/send_mailer_asynchronously" method="post">
+  <label for="msg_message">Message</label>
+  <input type="text" name="message" value="Hello World Async"/>
+  <div class="buttons">
+  <input type="submit" value="Send Async!" onclick="document.getElementById('loader').className='loading';">
+  </div>
+  </form>
+  </td>
+  </tr>
+  </table>
+</body>
+</html>
+
