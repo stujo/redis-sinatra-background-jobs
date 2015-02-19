@@ -37,20 +37,17 @@ end
 
 get '/' do
   @flash_message = params[:flash]
-
   erb :index
 end
 
 post '/send_mailer_synchronously' do
-
   Mailer.send_mailer_synchronously params[:message]
-
-  redirect '/?flash=Send%20Sync%20Complete'
+  @flash_message = 'Send Complete'
+  erb :index
 end
 
 post '/send_mailer_asynchronously' do
-
   Mailer.send_mailer_asynchronously params[:message]
-
-  redirect '/?flash=Send%20ASync%20Queued'
+  @flash_message = 'Send Asynchronously Queued'
+  erb :index
 end
